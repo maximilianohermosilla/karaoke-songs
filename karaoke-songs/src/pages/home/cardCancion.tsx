@@ -5,6 +5,7 @@ import { FaUserCheck } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 import { InsertCancion, UpdateCancion } from "../../services/cancionService";
 import { useForm } from "react-hook-form";
+import { confirmAlert } from 'react-confirm-alert'; // Import
 
 interface CancionProps{
     data?: Cancion;
@@ -51,10 +52,31 @@ export default function CardCancion({data}: CancionProps) {
         }
     }
 
+    const deleteSolicitante = () => {
+        if(token != ""){
+            confirmAlert({
+            title: cancion?.nombre,
+            message: `¿Desea eliminar a ${cancion?.nombreSolicitante} de la canción?`,
+            buttons: [
+                {
+                label: 'Cancelar',
+                className: "btn btn-danger",
+                onClick: () => alert('Click No')
+                },
+                {
+                label: 'Confirmar',
+                className: "btn btn-primary",
+                onClick: () => alert('Click Si')
+                }
+            ]
+            });
+        }
+      };
+
     return(
         <div>
             <div className={`card__cancion w-100 border border-secondary rounded my-3 text-light d-flex justify-content-between ${cancion?.nombreSolicitante != ""?'cancion__selected':''}`}>
-                <div className={`${cancion?.nombreSolicitante != ""?'d-flex card__nombre__solicitante':'d-none'}`}>
+                <div className={`${cancion?.nombreSolicitante != ""?'d-flex card__nombre__solicitante':'d-none'}`} onClick={deleteSolicitante}>
                     <span>{cancion?.nombreSolicitante}</span>
                 </div>
                 <div>
@@ -63,12 +85,12 @@ export default function CardCancion({data}: CancionProps) {
                 </div>
                 <div className="cancion__container__button h-50">
                     {cancion?.url != "" && token != ""?
-                        <a className="btn btn-danger rounded-0" href={cancion?.url} target="_blank"><FaYoutube></FaYoutube></a>                
+                        <button className="btn btn-danger rounded-0" onClick={() => window.open(`${cancion?.url}`,'name','width=600,height=400')}><FaYoutube></FaYoutube></button>                
                     :''}
                     {cancion?.nombreSolicitante == ""?                
                         <button type="button" className="btn btn-outline-info h-50" data-bs-toggle="modal" data-bs-target={`#modal-update-cancion_${cancion?.id}`}
                             disabled={cancion?.nombreSolicitante != ""}><FaUserCheck></FaUserCheck></button>                
-                    :''} 
+                    :''}
                 </div>              
             </div>
 

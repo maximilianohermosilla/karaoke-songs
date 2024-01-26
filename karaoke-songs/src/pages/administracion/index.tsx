@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { FaUser } from 'react-icons/fa'
+import { ImExit } from "react-icons/im";
 import { IoHomeSharp } from "react-icons/io5";
 import { AutenticarUsuario } from '../../services/usuarioService';
 import FormLogin from './login';
 import AdminCanciones from './adminCanciones';
+import { confirmAlert } from 'react-confirm-alert';
 
 export default function Administracion() {
     const [token, setToken] = useState('');
@@ -30,17 +31,29 @@ export default function Administracion() {
             }        
         } catch (error: any) {
             console.log(error.message);
-            //setMessage(error.message);
-            let btnConfirmar = document.getElementById(`btnModalError`);
-            btnConfirmar?.click();
+            let response = JSON.parse(error.message);
+            confirmAlert({            
+                message: response.message,
+                buttons: [{
+                    label: 'Aceptar',
+                    className: "btn btn-outline-primary",
+                    onClick: () => window.location.reload()
+                    }],
+                willUnmount: () => {window.location.reload()}
+            });
         }    
+    }
+    
+    const logOut = () => {
+        localStorage.removeItem("token");
+        window.location.reload();
     }
     
     return (
     <div className="inicio__container container-fluid d-flex flex-column align-items-center justify-content-center py-2">            
         <h2 className="inicio__titulo w-100 d-flex justify-content-center text-light align-items-center p-4">
             Lucas Podesta Karaoke
-            <a href="/administracion" className="btn btn-outline-info m-1 mx-3"><FaUser></FaUser></a>
+            {token != ""?<button className="btn btn-outline-danger m-1 mx-3" onClick={logOut}><ImExit></ImExit></button>:''}
         </h2>
         <div className="container-fluid w-100 d-flex justify-content-center gap-2 my-2">
             <a href="/inicio" className="btn btn-light m-1 mx-3"><IoHomeSharp></IoHomeSharp></a>

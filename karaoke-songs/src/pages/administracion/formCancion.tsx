@@ -71,7 +71,7 @@ export default function FormCancion({data}: FormCancionProps){
                     <label className="form-check-label mx-2" htmlFor="Nombre">
                         Nombre
                     </label>
-                    <input className="form-control" type="text" {...register("Nombre", { required: true,  maxLength: { value: 25, message: "Longitud máxima de 25 carácteres" } })}/>
+                    <input className="form-control" type="text" {...register("Nombre", { required: true,  maxLength: { value: 50, message: "Longitud máxima de 50 carácteres" } })}/>
                                     {errors.Nombre?.type === "required" && (<p className="text-danger m-0"> El campo nombre es requerido</p>)}
                                     {errors.Nombre?.type === "maxLength" && (<p className="text-danger m-0">{errors.Nombre?.message}</p>)}
                 </div>
@@ -79,7 +79,7 @@ export default function FormCancion({data}: FormCancionProps){
                     <label className="form-check-label mx-2" htmlFor="Autor">
                     Autor
                     </label>
-                    <input className="form-control" type="text" {...register("Autor", { required: false,  maxLength: { value: 25, message: "Longitud máxima de 25 carácteres" } })}/>
+                    <input className="form-control" type="text" {...register("Autor", { required: false,  maxLength: { value: 50, message: "Longitud máxima de 50 carácteres" } })}/>
                                     {errors.Autor?.type === "maxLength" && (<p className="text-danger m-0">{errors.Autor?.message}</p>)}
                 </div>
                 <div className="mb-3">

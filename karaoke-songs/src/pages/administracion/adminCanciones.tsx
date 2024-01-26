@@ -39,7 +39,18 @@ export default function AdminCanciones(){
             }            
         });
         let result = await LimpiarCanciones(ids);
-        console.log(ids);
+
+        if (result.message){
+            confirmAlert({            
+                message: result.message,
+                buttons: [{
+                    label: 'Aceptar',
+                    className: "btn btn-outline-primary",
+                    onClick: () => window.location.reload()
+                    }],
+                willUnmount: () => {window.location.reload()}
+            });
+        }
     }
 
     const openModal = () => {

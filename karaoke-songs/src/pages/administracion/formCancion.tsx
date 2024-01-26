@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Cancion } from "../../interfaces/cancion"
 import { useForm } from "react-hook-form";
 import { InsertCancion, UpdateCancion } from "../../services/cancionService";
+import { confirmAlert } from "react-confirm-alert";
 
 interface FormCancionProps{
     data?: Cancion;
@@ -44,7 +45,15 @@ export default function FormCancion({data}: FormCancionProps){
 
         console.log(response);
         if (response.message){
-            alert(response.message)
+            confirmAlert({            
+                message: response.message,
+                buttons: [{
+                    label: 'Aceptar',
+                    className: "btn btn-outline-primary",
+                    onClick: () => window.location.reload()
+                    }],
+                willUnmount: () => {window.location.reload()}
+            });
         }
 
         if (response.response && response.response.statusCode && response.response.statusCode == 200){
@@ -94,7 +103,7 @@ export default function FormCancion({data}: FormCancionProps){
                 </div>                
             </div>
             <div className="form__cancion__footer d-flex justify-content-end gap-2">
-                <button type="button" className="btn btn-outline-danger">Cancelar</button>
+                <button type="button" className="btn btn-outline-danger" onClick={() => window.location.reload() }>Cancelar</button>
                 <button type="submit" className="btn btn-outline-primary">Guardar</button>
             </div>
         </form>

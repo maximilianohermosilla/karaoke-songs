@@ -5,4 +5,5 @@ export interface Cancion{
     url?: string,
     nombreSolicitante?: string,
     habilitado?: boolean
+    solicitante?: boolean
 }

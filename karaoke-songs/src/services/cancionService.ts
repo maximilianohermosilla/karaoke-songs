@@ -71,12 +71,16 @@ export const UpdateCancion = async (data: any): Promise<any> => {
         })
                
         if (!response.ok){
-            throw new Error(response.statusText);
+            console.log(response)
+            //throw new Error(response.statusText);
         }
         result = await response.json();
+
+        console.log(result)
         if(response.ok && response.status == 200){
             return result;
-        }        
+        }    
+        return result;    
     } catch (error) {
         return undefined;
     }

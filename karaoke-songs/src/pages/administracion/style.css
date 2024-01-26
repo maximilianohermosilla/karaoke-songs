@@ -1,3 +1,15 @@
 .login__container{
     max-width: 640px;
 }
+
+.admin__header{
+    max-width: 1000px;
+}
+
+.card__cancion, .cancion__autor{
+    overflow: hidden;
+}
+
+.cancion__data{
+    max-width: 80%;
+}

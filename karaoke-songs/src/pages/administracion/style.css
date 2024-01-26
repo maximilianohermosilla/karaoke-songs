@@ -7,9 +7,28 @@
 }
 
 .card__cancion, .cancion__autor{
-    overflow: hidden;
+    overflow: scroll;
+}
+
+.card__cancion::-webkit-scrollbar {
+    display: none;
+}
+
+
+.cancion__autor::-webkit-scrollbar {
+    display: none;
 }
 
 .cancion__data{
     max-width: 80%;
+}
+
+.react-confirm-alert{
+    width: 50%;
+    min-width: 360px;
+}
+
+.form__cancion__container{
+    min-width: 50%;
+    max-width: 90%;
 }

@@ -5,6 +5,7 @@ import { CiEdit } from "react-icons/ci";
 import { InsertCancion, UpdateCancion } from "../../services/cancionService";
 import { useForm } from "react-hook-form";
 import { confirmAlert } from 'react-confirm-alert'; // Import
+import FormCancion from "./formCancion";
 
 interface CancionProps{
     data?: Cancion;
@@ -62,7 +63,20 @@ export default function CardCancionAdmin({data}: CancionProps) {
             }
         ]
         });
-      };
+    };
+
+          
+    const openModalEdit = () => {
+        confirmAlert({
+            customUI: ({ onClose }) => {
+              return (
+                <div className="react-confirm-alert-body">
+                    <FormCancion data={cancion}></FormCancion>
+                </div>
+              );
+            }
+          });
+    }
 
     return(
         <div>
@@ -86,9 +100,9 @@ export default function CardCancionAdmin({data}: CancionProps) {
                     </div>
                 </div>
                 <div className="d-flex flex-column justify-content-between gap-3">
-                    <button className="btn btn-success"><CiEdit></CiEdit></button>
+                    <button className="btn btn-success" onClick={openModalEdit}><CiEdit></CiEdit></button>
                     {cancion?.nombreSolicitante != ""?                
-                        <input type="checkbox" className="cancion__checkbox mb-2"/>
+                        <input id={cancion?.id?.toString() || ""} type="checkbox" className="cancion__checkbox mb-2"/>
                     :''}
                 </div>              
             </div>

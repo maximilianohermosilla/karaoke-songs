@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import { Cancion } from "../../interfaces/cancion";
 import { FaUserCheck } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
-import { InsertCancion, UpdateCancion } from "../../services/cancionService";
+import { InsertCancion, LimpiarCanciones, UpdateCancion } from "../../services/cancionService";
 import { useForm } from "react-hook-form";
-import { confirmAlert } from 'react-confirm-alert'; // Import
+import { confirmAlert } from 'react-confirm-alert';
 
 interface CancionProps{
     data?: Cancion;
@@ -40,7 +40,15 @@ export default function CardCancion({data}: CancionProps) {
         let response = await UpdateCancion(formData);
 
         if (response.message){
-            alert(response.message)
+            confirmAlert({            
+                message: response.message,
+                buttons: [{
+                    label: 'Aceptar',
+                    className: "btn btn-outline-primary",
+                    onClick: () => window.location.reload()
+                    }],
+                willUnmount: () => {window.location.reload()}
+            });
         }
 
         if (response.response && response.response.statusCode && response.response.statusCode == 200){
@@ -63,18 +71,34 @@ export default function CardCancion({data}: CancionProps) {
             buttons: [
                 {
                 label: 'Cancelar',
-                className: "btn btn-danger",
-                onClick: () => alert('Click No')
+                className: "btn btn-outline-danger",
                 },
                 {
                 label: 'Confirmar',
-                className: "btn btn-primary",
-                onClick: () => alert('Click Si')
+                className: "btn btn-outline-primary",
+                onClick: () => cleanSolicitante()
                 }
             ]
             });
         }
-      };
+    };
+    
+    const cleanSolicitante = async () => {
+        let ids: string[] = [];    
+        ids.push(cancion?.id?.toString() || "");
+        console.log(ids)
+        let result = await LimpiarCanciones(ids);
+        console.log(result);
+        confirmAlert({            
+            message: result.message,
+            buttons: [{
+                label: 'Aceptar',
+                className: "btn btn-outline-primary",
+                onClick: () => window.location.reload()
+                }],
+            willUnmount: () => {window.location.reload()}
+        });
+    }
 
     return(
         <div>

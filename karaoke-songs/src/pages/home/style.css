@@ -17,7 +17,7 @@
 
 .cancion__selected::-webkit-scrollbar {
     display: none;
-  }
+}
 
 .cancion__selected span{
     background: linear-gradient(to bottom left, rgba(0,0,0,0.5), rgba(0,0,0,0.2) , rgba(0,0,0,0.1));

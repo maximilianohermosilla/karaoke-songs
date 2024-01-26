@@ -86,6 +86,40 @@ export const UpdateCancion = async (data: any): Promise<any> => {
     }
 }
 
+export const LimpiarCanciones = async (data: string[]): Promise<any> => {
+    console.log(data)
+    if (ENV_DEMO){
+        return 0;
+    }
+    const url = `${BASE_URL}`;    
+    //const JwtToken = localStorage.getItem("token")?.replace(/['"]+/g, '');
+    let result;
+    try {
+        const response = await fetch(url, {
+            method: "PATCH",
+            headers:{
+                "Content-Type": "application/json",
+                //"Authorization": `Bearer ${JwtToken}`
+            },
+            body: JSON.stringify(data) 
+        })
+               
+        if (!response.ok){
+            console.log(response)
+            //throw new Error(response.statusText);
+        }
+        result = await response.json();
+
+        console.log(result)
+        if(response.ok && response.status == 200){
+            return result;
+        }    
+        return result;    
+    } catch (error) {
+        return undefined;
+    }
+}
+
 export const DeleteCancion = async (CancionId: number): Promise<any> => {
     if (ENV_DEMO){
         return 0;
